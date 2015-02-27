@@ -5,65 +5,59 @@ import org.bukkit.configuration.ConfigurationSection;
 import de.st_ddt.crazyutil.poly.room.PseudoRoom;
 import de.st_ddt.crazyutil.poly.room.Room;
 
-public abstract class ExtendedRoom implements Room
-{
+public abstract class ExtendedRoom implements Room {
 
 	protected Room room;
 
-	public ExtendedRoom(final Room room)
-	{
+	public ExtendedRoom(final Room room) {
 		super();
 		this.room = room;
 	}
 
-	public ExtendedRoom(final ConfigurationSection config)
-	{
+	public ExtendedRoom(final ConfigurationSection config) {
 		super();
 		this.room = PseudoRoom.load(config.getConfigurationSection("room"));
+		if (room == null) {
+			throw new IllegalArgumentException("Invalid Room Configuration in \"" + config.getCurrentPath() + ".room\" !");
+		}
 	}
 
-	public Room getRoom()
-	{
+	public Room getRoom() {
 		return room;
 	}
 
-	public void setRoom(final Room room)
-	{
+	public void setRoom(final Room room) {
 		this.room = room;
 	}
 
 	@Override
-	public void scale(final double scale)
-	{
+	public void scale(final double scale) {
 		room.scale(scale);
 	}
 
 	@Override
-	public void scale(final double scaleX, final double scaleY, final double scaleZ)
-	{
+	public void scale(final double scaleX, final double scaleY, final double scaleZ) {
 		room.scale(scaleX, scaleY, scaleZ);
 	}
 
 	@Override
-	public final void save(final ConfigurationSection config, final String path, final boolean includeType)
-	{
-		if (includeType)
+	public final void save(final ConfigurationSection config, final String path, final boolean includeType) {
+		if (includeType) {
 			config.set(path + "type", getClass().getName());
+		}
 		save(config, path);
 	}
 
 	@Override
-	public void save(final ConfigurationSection config, final String path)
-	{
-		room.save(config, path + "room.");
+	public void save(final ConfigurationSection config, final String path) {
+		room.save(config, path + "room.", true);
 	}
 
 	@Override
 	public abstract ExtendedRoom clone();
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return getClass().getSimpleName();
 	}
 }

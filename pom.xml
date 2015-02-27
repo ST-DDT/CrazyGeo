@@ -8,7 +8,7 @@
 
 	<groupId>de.st_ddt.crazy</groupId>
 	<artifactId>CrazyGeo</artifactId>
-	<version>0.3.4</version>
+	<version>0.3.5</version>
 	<packaging>jar</packaging>
 
 	<name>CrazyGeo</name>
